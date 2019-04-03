@@ -1,3 +1,13 @@
+/* o_9b2565981764d034b75a93f83554736f() */
+
+void o_9b2565981764d034b75a93f83554736f(void)
+
+{
+  puts("invalid_input");
+                    /* WARNING: Subroutine does not return */
+  exit(1);
+}
+
 /* o_d0c7d58c782c4d8b3ce53224c70b8682(char) */
 
 undefined8 o_d0c7d58c782c4d8b3ce53224c70b8682(char param_1)
