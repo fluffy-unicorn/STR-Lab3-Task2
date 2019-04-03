@@ -1,0 +1,16 @@
+digraph g {
+__start0 [label="" shape="none"];
+
+	s0 [shape="circle" label="s0"];
+	s1 [shape="circle" label="s1"];
+	s0 -> s1 [label="A / X;"];
+	s0 -> s1 [label="B / Y;"];
+	s0 -> s0 [label="C / Z;"];
+	s0 -> s0 [label="Q / invalid_input;exit(1);invalid_input;exit(1);invalid_input;exit(1);A;"];
+	s1 -> s1 [label="A / Z;"];
+	s1 -> s1 [label="B / Y;"];
+	s1 -> s1 [label="C / Z;"];
+	s1 -> s1 [label="Q / invalid_input;exit(1);invalid_input;exit(1);A;"];
+
+__start0 -> s0;
+}
