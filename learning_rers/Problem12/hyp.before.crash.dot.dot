@@ -1,0 +1,7 @@
+digraph g {
+__start0 [label="" shape="none"];
+
+	s0 [shape="circle" label="s0"];
+
+__start0 -> s0;
+}
