@@ -15,9 +15,16 @@ public class RERSExperiment {
      * @param args
      * @throws IOException
      */
+	// The RERS problem to run
 	static final int problem = 12;
+	// LStar, RivestSchapire, TTT, KearnsVazirani
+	static final BasicLearner.LearningMethod learningMethod = BasicLearner.LearningMethod.TTT;
+	// RandomWalk, WMethod, WpMethod, UserQueries
+	static final BasicLearner.TestingMethod testingMethod = BasicLearner.TestingMethod.WMethod;
+	// Path to RERS problem files
 	static final String path = "/home/tinus/master/2018-19/2A/STR/lab3/rers/";
 	
+	// Get the alphabet based on the problem selected
 	private static Collection<String> selectAlphabet(int problem) {
 		Collection<String> inputAlphabetA = ImmutableSet.of("1","2","3","4","5","6","7","8","9","10");
 		Collection<String> inputAlphabetB = ImmutableSet.of("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15");
@@ -40,18 +47,17 @@ public class RERSExperiment {
 			return null;
 		}
 	}
-    public static void main(String [] args) throws IOException {
+
+	public static void main(String [] args) throws IOException {
         // Load the System Under Learning (SUL)
         SUL<String,String> sul = new ProcessSUL(path + "Problem" + problem + "/Problem" + problem);
-
 
         // the input alphabet
         Collection<String> inputAlphabet = selectAlphabet(problem);
 
         try {
             // runControlledExperiment for detailed statistics, runSimpleExperiment for just the result
-            //BasicLearner.runControlledExperiment(sul, BasicLearner.LearningMethod.TTT, BasicLearner.TestingMethod.RandomWalk, inputAlphabet);
-            BasicLearner.runControlledExperiment("Problem" + problem, sul, BasicLearner.LearningMethod.TTT, BasicLearner.TestingMethod.WMethod, inputAlphabet);
+            BasicLearner.runControlledExperiment("Problem" + problem, sul, learningMethod, testingMethod, inputAlphabet);
         } finally {
             if (sul instanceof AutoCloseable) {
                 try {
