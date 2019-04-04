@@ -72,6 +72,15 @@ public class BasicLearner {
 	 * MaxDepth-parameter for W-method and Wp-method. Typically not larger than 3. Decrease for quicker runs.
 	 */
 	public static int w_wp_methods_maxDepth = 2;
+	
+	public static boolean withTimeout = true;
+	
+	// In seconds
+	public static int timeoutLength = 600;
+
+	private static boolean timeoutExpired(long startTime) {
+		return (System.currentTimeMillis() - startTime) > (timeoutLength * 1000); 
+	}
 
 	//*****************************************//
 	// Predefined learning and testing methods //
@@ -171,6 +180,7 @@ public class BasicLearner {
 	 * @throws IOException
 	 */
 	public static void runControlledExperiment(
+			long startTime,
 			String problem,
 			LearningAlgorithm<MealyMachine<?, String, ?, String>, String, Word<String>> learner,
 			EquivalenceOracle<MealyMachine<?, String, ?, String>, String, Word<String>> eqOracle,
@@ -218,6 +228,10 @@ public class BasicLearner {
 					System.out.println("\nFinished learning!");
 					produceOutput(problem + "/" + FINAL_MODEL_FILENAME, learner.getHypothesisModel(), alphabet, true);
 					break;
+				} else if(withTimeout && timeoutExpired(startTime)) {
+					int expired = (int)(System.currentTimeMillis() - startTime) / 1000;
+					System.out.println("\nTimeout expired (" + expired + " seconds)...\n");
+					break;
 				} else {
 					// Counterexample found, rinse and repeat
 					System.out.println();
@@ -243,6 +257,7 @@ public class BasicLearner {
 	 * @throws IOException
 	 */
 	public static void runControlledExperiment(
+			long startTime,
 			String problem,
 			SUL<String,String> sul,
 			LearningMethod learningMethod,
@@ -251,7 +266,7 @@ public class BasicLearner {
 		) throws IOException {
 		Alphabet<String> learnlibAlphabet = new SimpleAlphabet<String>(alphabet);
 		LearningSetup learningSetup = new LearningSetup(sul, learningMethod, testingMethod, learnlibAlphabet);
-		runControlledExperiment(problem, learningSetup.learner, learningSetup.eqOracle, learningSetup.nrSymbols, learningSetup.nrResets, learnlibAlphabet);
+		runControlledExperiment(startTime, problem, learningSetup.learner, learningSetup.eqOracle, learningSetup.nrSymbols, learningSetup.nrResets, learnlibAlphabet);
 	}
 
 	/**

@@ -16,7 +16,7 @@ public class RERSExperiment {
      * @throws IOException
      */
 	// The RERS problem to run
-	static final int problem = 12;
+	static final int problem = 11;
 	// LStar, RivestSchapire, TTT, KearnsVazirani
 	static final BasicLearner.LearningMethod learningMethod = BasicLearner.LearningMethod.TTT;
 	// RandomWalk, WMethod, WpMethod, UserQueries
@@ -57,7 +57,7 @@ public class RERSExperiment {
 
         try {
             // runControlledExperiment for detailed statistics, runSimpleExperiment for just the result
-            BasicLearner.runControlledExperiment("Problem" + problem, sul, learningMethod, testingMethod, inputAlphabet);
+            BasicLearner.runControlledExperiment(System.currentTimeMillis(), "Problem" + problem, sul, learningMethod, testingMethod, inputAlphabet);
         } finally {
             if (sul instanceof AutoCloseable) {
                 try {
